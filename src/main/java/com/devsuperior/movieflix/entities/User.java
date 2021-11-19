@@ -1,7 +1,10 @@
 package com.devsuperior.movieflix.entities;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,13 +19,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements UserDetails{
+public class User implements UserDetails, Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -38,8 +42,9 @@ public class User implements UserDetails{
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToMany(mappedBy = "user")
-	private Set<Review> reviews = new HashSet<>();
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER) 
+	@Fetch(value=org.hibernate.annotations.FetchMode.SUBSELECT)
+	private List<Review> reviews = new ArrayList<>();
 	
 	public User() {
 	}
@@ -88,7 +93,7 @@ public class User implements UserDetails{
 		return roles;
 	}
 
-	public Set<Review> getReviews() {
+	public List<Review> getReviews() {
 		return reviews;
 	}
 
@@ -121,5 +126,14 @@ public class User implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public boolean hasRole(String roleName) {
+		for(Role role : roles) {
+			if(role.getAuthority().equals(roleName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
