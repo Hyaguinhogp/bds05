@@ -3,14 +3,17 @@ package com.devsuperior.movieflix.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_movie")
 public class Movie {
 
 	@Id
@@ -20,6 +23,8 @@ public class Movie {
 	private String subTitle;
 	private Integer year;
 	private String imgUrl;
+	
+	@Column(columnDefinition = "TEXT")
 	private String synopsis;
 	
 	@OneToMany(mappedBy = "movie")
