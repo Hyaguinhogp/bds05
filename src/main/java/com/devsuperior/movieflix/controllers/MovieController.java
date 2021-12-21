@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.movieflix.entities.Movie;
+import com.devsuperior.movieflix.dtos.MovieDTO;
+import com.devsuperior.movieflix.dtos.MovieReviewsDTO;
 import com.devsuperior.movieflix.services.MovieService;
 
 @RestController
@@ -20,8 +22,22 @@ public class MovieController {
 	private MovieService movieService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Movie>> findAllPaged(@PageableDefault(sort = "tittle") Pageable pageable){
-		Page<Movie> page = movieService.findMoviesPaged(pageable);
+	public ResponseEntity<Page<MovieDTO>> findAllPaged(@PageableDefault(sort = "title") Pageable pageable){
+		Page<MovieDTO> page = movieService.findMoviesPaged(pageable);
 		return ResponseEntity.ok().body(page);
 	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<MovieDTO> findById(@PathVariable Long id){
+		MovieDTO movie = movieService.findById(id);
+		return ResponseEntity.ok().body(movie);
+	}
+	
+	@GetMapping(value = "/{id}/reviews")
+	public ResponseEntity<MovieReviewsDTO> findMovieReviews(@PathVariable Long id){
+		MovieReviewsDTO movie = movieService.findMovieReviews(id);
+		return ResponseEntity.ok().body(movie);
+	}
+	
+
 }

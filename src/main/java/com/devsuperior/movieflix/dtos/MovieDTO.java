@@ -1,43 +1,28 @@
-package com.devsuperior.movieflix.entities;
+package com.devsuperior.movieflix.dtos;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.devsuperior.movieflix.entities.Genre;
+import com.devsuperior.movieflix.entities.Movie;
 
-@Entity
-@Table(name = "tb_movie")
-public class Movie {
+public class MovieDTO implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String subTitle;
 	private Integer year;
 	private String imgUrl;
-	
-	@Column(columnDefinition = "TEXT")
 	private String synopsis;
-	
-	@OneToMany(mappedBy = "movie")
-	private Set<Review> reviews = new HashSet<>();
-	
-	@ManyToOne
+	private Set<ReviewDTO> reviews = new HashSet<>();
 	private Genre genre;
 	
-	public Movie() {
+	public MovieDTO() {
 	}
 
-	public Movie(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre) {
-		super();
+	public MovieDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre) {
 		this.id = id;
 		this.title = title;
 		this.subTitle = subTitle;
@@ -45,6 +30,15 @@ public class Movie {
 		this.imgUrl = imgUrl;
 		this.synopsis = synopsis;
 		this.genre = genre;
+	}
+	
+	public MovieDTO(Movie movie) {
+		id = movie.getId();
+		title = movie.getTitle();
+		subTitle = movie.getSubTitle();
+		year = movie.getYear();
+		imgUrl = movie.getImgUrl();
+		synopsis = movie.getSynopsis();
 	}
 
 	public Long getId() {
@@ -95,15 +89,15 @@ public class Movie {
 		this.synopsis = synopsis;
 	}
 
+	public Set<ReviewDTO> getReviews() {
+		return reviews;
+	}
+
 	public Genre getGenre() {
 		return genre;
 	}
 
 	public void setGenre(Genre genre) {
 		this.genre = genre;
-	}
-
-	public Set<Review> getReviews() {
-		return reviews;
 	}
 }
