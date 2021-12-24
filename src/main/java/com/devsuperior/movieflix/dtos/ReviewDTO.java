@@ -7,29 +7,29 @@ import com.devsuperior.movieflix.entities.Review;
 public class ReviewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Long MovieId;
 	private String text;
 	
 	public ReviewDTO() {
 	}
 
-	public ReviewDTO(Long id, String text) {
-		this.id = id;
+	public ReviewDTO(Long MovieId, String text) {
+		this.MovieId = MovieId;
 		this.text = text;
 
 	}
 	
 	public ReviewDTO(Review review) {
-		id = review.getId();
+		MovieId = review.getMovie().getId();
 		text = review.getText();
 	}
 
-	public Long getId() {
-		return id;
+	public Long getMovieId() {
+		return MovieId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setMovieId(Long id) {
+		this.MovieId = id;
 	}
 
 	public String getText() {

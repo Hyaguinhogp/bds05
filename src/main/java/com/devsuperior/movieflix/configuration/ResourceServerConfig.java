@@ -18,7 +18,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	
 	private static final String[] PUBLIC = { "/oauth/token " , "/h2-console/**" };
 	
-	private static final String[] VISITOR_OR_MEMBER = { "/users/profile" };
+	private static final String[] VISITOR_OR_MEMBER = { "/users/profile" , "/genres/**" , "/reviews/**" };
 	
 	private static final String[] MEMBER = {};
 	
@@ -38,6 +38,4 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		.antMatchers(HttpMethod.GET, VISITOR_OR_MEMBER).hasAnyRole("MEMBER", "VISITOR")
 		.anyRequest().permitAll();
 	}
-
-	
 }

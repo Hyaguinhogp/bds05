@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.movieflix.components.JwtTokenEnhancer;
 import com.devsuperior.movieflix.entities.User;
 import com.devsuperior.movieflix.services.AuthService;
 import com.devsuperior.movieflix.services.UserService;
