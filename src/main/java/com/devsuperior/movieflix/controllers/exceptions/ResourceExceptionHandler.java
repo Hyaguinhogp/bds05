@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,5 +24,11 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<OAuthCustomError> entityNotFound(ForbiddenException e, HttpServletRequest request){
 		OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<OAuthCustomError> unprocessableEntity(MethodArgumentNotValidException e, HttpServletRequest request){
+		OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}
 }

@@ -28,6 +28,6 @@ public class ReviewService {
 		review.setUser(user);
 		review.setMovie(movie);
 		reviewRepository.save(review);
-		return reviewDTO;
+		return new ReviewDTO(review);
 	}
 }
