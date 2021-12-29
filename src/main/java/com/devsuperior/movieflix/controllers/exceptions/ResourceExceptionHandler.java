@@ -1,5 +1,7 @@
 package com.devsuperior.movieflix.controllers.exceptions;
 
+import java.util.NoSuchElementException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
@@ -30,5 +32,11 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<OAuthCustomError> unprocessableEntity(MethodArgumentNotValidException e, HttpServletRequest request){
 		OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+	}
+	
+	@ExceptionHandler(NoSuchElementException.class)
+	public ResponseEntity<OAuthCustomError> entityNotExists(NoSuchElementException e, HttpServletRequest request){
+		OAuthCustomError err = new OAuthCustomError("Forbidden", e.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 }

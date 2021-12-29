@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.movieflix.dtos.UserDTO;
 import com.devsuperior.movieflix.entities.User;
-import com.devsuperior.movieflix.services.AuthService;
 import com.devsuperior.movieflix.services.UserService;
 
 @RestController
@@ -18,15 +18,10 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private AuthService authService;
-	
 	@GetMapping(path = "/profile")
-	public ResponseEntity<User> getProfile(){
-		
-		User user = authService.authenticated();
-		
-		return ResponseEntity.ok().body(user);
+	public ResponseEntity<UserDTO> getProfile(){
+		UserDTO dto = userService.getProfile();
+		return ResponseEntity.ok().body(dto);
 	}
 	
 	@GetMapping(path = "/{id}")
